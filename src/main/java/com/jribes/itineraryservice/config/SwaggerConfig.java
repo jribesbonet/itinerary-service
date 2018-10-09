@@ -1,4 +1,4 @@
-package com.jribes.travelroutesservice.config;
+package com.jribes.itineraryservice.config;
 
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Value;

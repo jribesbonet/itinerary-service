@@ -5,11 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.jribes</groupId>
-	<artifactId>travel-routes-service</artifactId>
+	<artifactId>itinerary-service</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 
-	<name>travel-routes-service</name>
+	<name>itinerary-service</name>
 	<description>Give the shortest route and the less time route</description>
 
 	<parent>
@@ -53,6 +53,18 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<version>2.0.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+		</dependency>
+
 		<!-- Open api specification -->
 		<!-- Swagger 2 -->
 		<dependency>
@@ -74,6 +86,14 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.0</version>
 		</dependency>
+
+		<!-- Common functionalities lib -->
+		<dependency>
+			<groupId>com.jribes</groupId>
+			<artifactId>itinerary-lib</artifactId>
+			<version>1.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<dependencyManagement>

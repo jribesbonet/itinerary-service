@@ -1,11 +1,13 @@
-package com.jribes.travelroutesservice.response;
+package com.jribes.itineraryservice.response;
 
 import java.io.Serializable;
 import org.springframework.http.HttpStatus;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @SuppressWarnings("serial")
-public class TravelRouteServiceResponse implements Serializable {
+@ApiModel
+public class ItineraryServiceResponse implements Serializable {
 
   private static final String OK_DESCRIPTION = "Travel routes correctly returned";
   private static final String INTERNAL_SERVER_ERROR_DESCRIPTION =
@@ -16,29 +18,33 @@ public class TravelRouteServiceResponse implements Serializable {
   @ApiModelProperty(value = "Description of the response", example = "Correct response",
       required = true)
   private String responseDescription;
+  @ApiModelProperty(value = "Itinerary detail")
+  private ItineraryDetailResponse itineraryDetailResponse;
 
-  private TravelRouteServiceResponse() {
+  private ItineraryServiceResponse() {
 
   }
 
-  public static TravelRouteServiceResponse createOkTravelRouteServiceResponse() {
-    TravelRouteServiceResponse travelRouteServiceResponse = new TravelRouteServiceResponse();
+  public static ItineraryServiceResponse createOkTravelRouteServiceResponse(
+      ItineraryDetailResponse itineraryDetailResponse) {
+    ItineraryServiceResponse travelRouteServiceResponse = new ItineraryServiceResponse();
     travelRouteServiceResponse.setResponseStatus(Integer.parseInt(HttpStatus.OK.toString()));
     travelRouteServiceResponse.setResponseDescription(OK_DESCRIPTION);
+    travelRouteServiceResponse.setItineraryDetailResponse(itineraryDetailResponse);
     return travelRouteServiceResponse;
   }
 
-  public static TravelRouteServiceResponse createTravelRouteServiceResponseWithNameException(
+  public static ItineraryServiceResponse createTravelRouteServiceResponseWithNameException(
       String errorDescription) {
-    TravelRouteServiceResponse travelRouteServiceResponse = new TravelRouteServiceResponse();
+    ItineraryServiceResponse travelRouteServiceResponse = new ItineraryServiceResponse();
     travelRouteServiceResponse
         .setResponseStatus(Integer.parseInt(HttpStatus.BAD_REQUEST.toString()));
     travelRouteServiceResponse.setResponseDescription(errorDescription);
     return travelRouteServiceResponse;
   }
 
-  public static TravelRouteServiceResponse createTravelRouteServiceResponseWithGenericError() {
-    TravelRouteServiceResponse travelRouteServiceResponse = new TravelRouteServiceResponse();
+  public static ItineraryServiceResponse createTravelRouteServiceResponseWithGenericError() {
+    ItineraryServiceResponse travelRouteServiceResponse = new ItineraryServiceResponse();
     travelRouteServiceResponse
         .setResponseStatus(Integer.parseInt(HttpStatus.INTERNAL_SERVER_ERROR.toString()));
     travelRouteServiceResponse.setResponseDescription(INTERNAL_SERVER_ERROR_DESCRIPTION);
@@ -59,6 +65,14 @@ public class TravelRouteServiceResponse implements Serializable {
 
   public void setResponseDescription(String responseDescription) {
     this.responseDescription = responseDescription;
+  }
+
+  public ItineraryDetailResponse getItineraryDetailResponse() {
+    return itineraryDetailResponse;
+  }
+
+  public void setItineraryDetailResponse(ItineraryDetailResponse itineraryDetailResponse) {
+    this.itineraryDetailResponse = itineraryDetailResponse;
   }
 
   @Override

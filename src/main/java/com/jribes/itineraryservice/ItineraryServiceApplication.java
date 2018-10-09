@@ -1,14 +1,16 @@
-package com.jribes.travelroutesservice;
+package com.jribes.itineraryservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class TravelRoutesServiceApplication {
+@EnableFeignClients("com.jribes.itineraryservice")
+public class ItineraryServiceApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(TravelRoutesServiceApplication.class, args);
+    SpringApplication.run(ItineraryServiceApplication.class, args);
   }
 }
