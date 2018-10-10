@@ -2,7 +2,7 @@ package com.jribes.itineraryservice.response;
 
 import java.io.Serializable;
 import java.util.List;
-import com.jribes.itineraryservice.dijkstramodel.Vertex;
+import com.jribes.itinerarlib.dijkstra.Vertex;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -10,40 +10,53 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel
 public class ItineraryDetailResponse implements Serializable {
 
-  @ApiModelProperty(value = "Itinerary name", example = "BCN MAD IBZ")
-  private String name;
+  @ApiModelProperty(value = "Itinerary with less time", example = "BCN MAD HSK IBZ")
+  private String lessTimeItinerary;
+  @ApiModelProperty(value = "Itinerary with less connections", example = "BCN ZAZ IBZ")
+  private String lessConnectionsItinerary;
 
-  public static ItineraryDetailResponse createFakeResponse() {
+  public static ItineraryDetailResponse createOkResponseFromVertexPath(
+      List<Vertex> pathWithLessTime, List<Vertex> pathWithLessConnections) {
     ItineraryDetailResponse response = new ItineraryDetailResponse();
-    response.setName("BCN-BIL-IBZ");
-    return response;
-  }
 
-  public static ItineraryDetailResponse createOkResponseFromVertexPath(List<Vertex> path) {
-    ItineraryDetailResponse response = new ItineraryDetailResponse();
-    response.name = "";
-    for (Vertex vertex : path) {
-      response.name += vertex.getName() + " ";
+    response.lessTimeItinerary = "";
+    for (Vertex vertex : pathWithLessTime) {
+      response.lessTimeItinerary += vertex.getName() + " ";
     }
-    response.name = response.name.trim();
+    response.lessTimeItinerary = response.lessTimeItinerary.trim();
+
+    response.lessConnectionsItinerary = "";
+    for (Vertex vertex : pathWithLessConnections) {
+      response.lessConnectionsItinerary += vertex.getName() + " ";
+    }
+    response.lessConnectionsItinerary = response.lessConnectionsItinerary.trim();
+
     return response;
 
   }
 
   private ItineraryDetailResponse() {}
 
-
-  public String getName() {
-    return name;
+  public String getPathWithLessTime() {
+    return lessTimeItinerary;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setPathWithLessTime(String pathWithLessTime) {
+    this.lessTimeItinerary = pathWithLessTime;
+  }
+
+  public String getPathWithLessConnections() {
+    return lessConnectionsItinerary;
+  }
+
+  public void setPathWithLessConnections(String pathWithLessConnections) {
+    this.lessConnectionsItinerary = pathWithLessConnections;
   }
 
   @Override
   public String toString() {
-    return "ItineraryDetailResponse [name=" + name + "]";
+    return "ItineraryDetailResponse [pathWithLessTime=" + lessTimeItinerary
+        + ", pathWithLessConnections=" + lessConnectionsItinerary + "]";
   }
 
 }

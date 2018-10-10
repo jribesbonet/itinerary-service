@@ -2,10 +2,10 @@ package com.jribes.itineraryservice.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.jribes.itinerarlib.dijkstra.Edge;
+import com.jribes.itinerarlib.dijkstra.Graph;
+import com.jribes.itinerarlib.dijkstra.Vertex;
 import com.jribes.itinerarlib.exception.IncorrectFormatCityException;
-import com.jribes.itineraryservice.dijkstramodel.Edge;
-import com.jribes.itineraryservice.dijkstramodel.Graph;
-import com.jribes.itineraryservice.dijkstramodel.Vertex;
 import com.jribes.itineraryservice.feignproxy.CityConnectionsProxy;
 import com.jribes.itineraryservice.response.cityconnections.CityConnectionDetail;
 import com.jribes.itineraryservice.response.cityconnections.CityConnectionServiceResponse;
@@ -60,6 +60,16 @@ public class DijkstraServiceImpl implements DijkstraService {
     return new Graph(vertexes, edges);
   }
 
+  @Override
+  public Graph changeAllGraphDistancesToOne(Graph graph) {
+
+    for (int i = 0; i < graph.getEdges().size(); i++) {
+      graph.getEdges().get(i).setWeight(1L);
+    }
+
+    return graph;
+  }
+
   private void createGraphRecursively(List<Vertex> vertexes, List<Edge> edges,
       String originCityName, String destinationCityName, List<String> queriedNodes,
       List<String> storedVertex) throws IncorrectFormatCityException {
@@ -94,7 +104,8 @@ public class DijkstraServiceImpl implements DijkstraService {
             cityConnectionsResponse.getCityConnectionResponseList();
         for (CityConnectionDetail cityConnectionDetail : cityConnectionResponseList) {
           // Create new node with destination and add it to the origin node.
-          Long distance = 1L;
+          Long distance =
+              cityConnectionDetail.getArrivalTime() - cityConnectionDetail.getDepartureTime();
           Vertex destinationVertex = new Vertex(cityConnectionDetail.getDestinationCity(),
               cityConnectionDetail.getDestinationCity());
           if (!storedVertex.contains(cityConnectionDetail.getDestinationCity())) {
@@ -110,8 +121,8 @@ public class DijkstraServiceImpl implements DijkstraService {
               originVertex, destinationVertex, distance);
           // Add the edge to the edges list
           edges.add(edge);
-          logger.info("Adding edge from {} to {} into the edges list", originVertex.getName(),
-              destinationVertex.getName());
+          logger.info("Adding edge from {} to {} with distinace={} into the edges list",
+              originVertex.getName(), destinationVertex.getName(), distance);
 
           // before continue adding the next edge at same level, let's call recursively to check
           // which

@@ -2,7 +2,7 @@
 FROM openjdk:8-jre-slim
 
 #person in charge of the Dockerfile
-MAINTAINER Jordi Ribes Bonet <jordi.ribes@fonyou.com>
+MAINTAINER Jordi Ribes Bonet <jribes@gmail.com>
 
 LABEL Description="Dockerfile for adidas coding challenge Itinerary Service"
 

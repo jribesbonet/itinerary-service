@@ -2,15 +2,14 @@ package com.jribes.itineraryservice.feignproxy;
 
 import com.jribes.itinerarlib.exception.IncorrectFormatCityException;
 import com.jribes.itineraryservice.response.cityconnections.CityConnectionServiceResponse;
-import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@FeignClient(name = "city-connections-service")
-@RibbonClient(name = "city-connections-service")
+@FeignClient(name = "city-connections-service",
+    url = "${city-connections-service.ribbon.listOfServers}")
 @RequestMapping("/cityconnections")
 public interface CityConnectionsProxy {
 
